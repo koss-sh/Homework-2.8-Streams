@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static org.apache.commons.lang3.StringUtils.isAlpha;
+
 @Service
 public class EmployeeService {
     private static final int LIMIT = 10;
@@ -16,16 +18,10 @@ public class EmployeeService {
         Employee employee = new Employee(firstName, lastName, department, salary);
         if (employees.contains(employee))
             throw new RuntimeException();
-        if(!StringUtils.isAlphanumericSpace(firstName) || !StringUtils.isAlphanumericSpace(lastName))
-            throw new BadRequestException();
-        for (int i = 0; i < firstName.length(); i++) {
-            if (Character.isDigit(firstName.charAt(i)))
-                throw new BadRequestException();
-        }
-        for (int i = 0; i < lastName.length(); i++) {
-            if (Character.isDigit(lastName.charAt(i)))
-                throw new BadRequestException();
-        }
+        validateInput(firstName, lastName);
+   /*     if(!StringUtils.isAlpha(firstName) || !StringUtils.isAlpha(lastName))
+            throw new BadRequestException();*/
+
         if (employees.size() < LIMIT) {
             employees.add(employee);
             return employee;
@@ -38,6 +34,7 @@ public class EmployeeService {
         Employee employee = new Employee(firstName, lastName);
         if (!employees.contains(employee))
             throw new RuntimeException();
+        validateInput(firstName, lastName);
         employees.remove(employee);
             return employee;
     }
@@ -45,10 +42,15 @@ public class EmployeeService {
         Employee employee = new Employee(firstName, lastName);
         if (!employees.contains(employee))
             throw new RuntimeException();
+        validateInput(firstName, lastName);
         return employee;
     }
     public List<Employee> getAll() {
         return new ArrayList<>(employees);
+    }
+    private void validateInput(String firstName, String lastName) {
+        if(!isAlpha(firstName) || !isAlpha(lastName))
+            throw new BadRequestException();
     }
 
 

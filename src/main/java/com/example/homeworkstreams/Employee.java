@@ -1,5 +1,9 @@
 package com.example.homeworkstreams;
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.Objects;
+
+import static org.apache.tomcat.util.IntrospectionUtils.capitalize;
 
 public class Employee {
     private final String firstName;
@@ -9,8 +13,8 @@ public class Employee {
 
 
     public Employee(String firstName, String lastName, int department, double salary) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.firstName = capitalize(firstName);
+        this.lastName = capitalize(lastName);
         this.department = department;
         this.salary = salary;
     }
@@ -41,13 +45,6 @@ public class Employee {
 
     public void setSalary(double salary) {
         this.salary = salary;
-    }
-
-    public String getFullInfo() {
-        return firstName + " " + lastName+ " " + department + " " + salary;
-    }
-    public String getFullName() {
-        return firstName + " " + lastName;
     }
 
     @Override

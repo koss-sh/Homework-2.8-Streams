@@ -20,8 +20,7 @@ public class EmployeeController {
     @GetMapping("/add")
     public Employee add(@RequestParam ("firstName") String firstName, @RequestParam ("lastName") String lastName,
                         @RequestParam ("departmentId") int department, @RequestParam ("salary") int salary) {
-        return employeeService.addEmployee(StringUtils.capitalize(firstName), StringUtils.capitalize(lastName),
-                department, salary);
+        return employeeService.addEmployee(firstName, lastName, department, salary);
     }
 
 
