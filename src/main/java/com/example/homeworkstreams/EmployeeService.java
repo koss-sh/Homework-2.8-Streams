@@ -1,5 +1,6 @@
 package com.example.homeworkstreams;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -15,6 +16,16 @@ public class EmployeeService {
         Employee employee = new Employee(firstName, lastName, department, salary);
         if (employees.contains(employee))
             throw new RuntimeException();
+        if(!StringUtils.isAlphanumericSpace(firstName) || !StringUtils.isAlphanumericSpace(lastName))
+            throw new BadRequestException();
+        for (int i = 0; i < firstName.length(); i++) {
+            if (Character.isDigit(firstName.charAt(i)))
+                throw new BadRequestException();
+        }
+        for (int i = 0; i < lastName.length(); i++) {
+            if (Character.isDigit(lastName.charAt(i)))
+                throw new BadRequestException();
+        }
         if (employees.size() < LIMIT) {
             employees.add(employee);
             return employee;
