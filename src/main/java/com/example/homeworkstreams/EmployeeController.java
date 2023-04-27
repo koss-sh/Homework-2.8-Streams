@@ -1,5 +1,6 @@
 package com.example.homeworkstreams;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,7 +20,8 @@ public class EmployeeController {
     @GetMapping("/add")
     public Employee add(@RequestParam ("firstName") String firstName, @RequestParam ("lastName") String lastName,
                         @RequestParam ("departmentId") int department, @RequestParam ("salary") int salary) {
-        return employeeService.addEmployee(firstName, lastName, department, salary);
+        return employeeService.addEmployee(StringUtils.capitalize(firstName), StringUtils.capitalize(lastName),
+                department, salary);
     }
 
 
