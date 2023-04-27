@@ -32,17 +32,17 @@ public class EmployeeService {
 
     public Employee removeEmployee (String firstName, String lastName) {
         Employee employee = new Employee(firstName, lastName);
+        validateInput(firstName, lastName);
         if (!employees.contains(employee))
             throw new RuntimeException();
-        validateInput(firstName, lastName);
         employees.remove(employee);
             return employee;
     }
     public Employee findEmployee (String firstName, String lastName) {
         Employee employee = new Employee(firstName, lastName);
+        validateInput(firstName, lastName);
         if (!employees.contains(employee))
             throw new RuntimeException();
-        validateInput(firstName, lastName);
         return employee;
     }
     public List<Employee> getAll() {
