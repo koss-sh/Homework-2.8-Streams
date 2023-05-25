@@ -19,8 +19,7 @@ public class EmployeeService {
         if (employees.contains(employee))
             throw new RuntimeException();
         validateInput(firstName, lastName);
-   /*     if(!StringUtils.isAlpha(firstName) || !StringUtils.isAlpha(lastName))
-            throw new BadRequestException();*/
+
 
         if (employees.size() < LIMIT) {
             employees.add(employee);

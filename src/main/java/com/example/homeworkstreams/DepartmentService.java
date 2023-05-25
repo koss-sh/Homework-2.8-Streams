@@ -15,33 +15,22 @@ public class DepartmentService {
     public DepartmentService(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
-    public Map<Integer, List<Employee>> getAllEmployeesByDept() {
-        return employeeService.getAll().stream()
-                .collect(Collectors.groupingBy(Employee::getDepartment));
-    }
-    public void indexAllDeptSalaries(int department, double index) {
-        employeeService.getAll().stream()
-                .filter(employee -> employee.getDepartment() == department)
-                .forEach(employee -> employee.setSalary(employee.getSalary() * (1 + index / 100)));
-    }
-    public double countAverageDeptSalary(int department) {
+
+
+
+    public double findDeptMinSalary(int department) {
         return employeeService.getAll().stream()
                 .filter(employee -> employee.getDepartment() == department)
                 .mapToDouble(Employee::getSalary)
-                .average()
-                .orElse(0);
+                .min()
+                .orElseThrow(RuntimeException::new);
     }
-    public Employee findDeptMinSalary(int department) {
+    public double findDeptMaxSalary(int department) {
         return employeeService.getAll().stream()
                 .filter(employee -> employee.getDepartment() == department)
-                .min(Comparator.comparingDouble(Employee::getSalary))
-                .orElse(null);
-    }
-    public Employee findDeptMaxSalary(int department) {
-        return employeeService.getAll().stream()
-                .filter(employee -> employee.getDepartment() == department)
-                .max(Comparator.comparingDouble(Employee::getSalary))
-                .orElse(null);
+                .mapToDouble(Employee::getSalary)
+                .max()
+                .orElseThrow(RuntimeException::new);
     }
     public double countTotalDeptSalary(int department) {
         return employeeService.getAll().stream()
@@ -53,5 +42,9 @@ public class DepartmentService {
         return employeeService.getAll().stream()
                 .filter(employee -> employee.getDepartment() == department)
                 .toList();
+    }
+    public Map<Integer, List<Employee>> getAllEmployeesByDept() {
+        return employeeService.getAll().stream()
+                .collect(Collectors.groupingBy(Employee::getDepartment));
     }
 }
